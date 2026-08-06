@@ -246,6 +246,15 @@
             text-shadow: 0 0 5px rgba(255, 183, 0, 0.5);
         }
 
+        /* Marqueur des champs restant à compléter — supprimer la classe une fois rempli */
+        .todo {
+            color: var(--alert-red);
+            font-weight: bold;
+            background: rgba(255, 51, 51, 0.12);
+            border: 1px dashed var(--alert-red);
+            padding: 0 4px;
+        }
+
         .code-box {
             background: var(--dark-green);
             border: 1px dashed var(--dim-green);
@@ -254,6 +263,7 @@
             margin: 15px 0;
             overflow-x: auto;
             border-radius: 4px;
+            white-space: pre-wrap;
         }
 
         .grid-2 {
@@ -277,6 +287,18 @@
             margin-bottom: 8px;
             border-bottom: 1px solid var(--dark-green);
             padding-bottom: 4px;
+        }
+
+        .mail-link {
+            color: var(--main-green);
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .mail-link:hover {
+            background: var(--main-green);
+            color: var(--bg-color);
+            text-decoration: none;
         }
 
         .terminal-cli {
@@ -360,15 +382,16 @@
 <body>
 
     <div class="crt-overlay">
-        
+
         <!-- Terminal Header -->
         <header class="terminal-header">
             <div>
                 <h1 class="sys-title">PROJET J.E.R.R.Y // LEGAL PROTOCOL</h1>
-                <div class="sys-subtitle">MENTIONS LÉGALES, CGU & POLITIQUE DE CONFIDENTIALITÉ WATCHOS</div>
+                <div class="sys-subtitle">MENTIONS LÉGALES, CGU, ASSISTANCE &amp; POLITIQUE DE CONFIDENTIALITÉ WATCHOS</div>
             </div>
             <div class="sys-meta">
-                <div>SYS_VER: 1.0.4-WATCH</div>
+                <!-- CORRIGÉ : doit correspondre à la version soumise sur l'App Store -->
+                <div>SYS_VER: 1.0-WATCH</div>
                 <div>SIGNAL: STELLANTIS // FREQ: 1420.405 MHz</div>
                 <div class="status-badge">
                     <span class="status-pulse"></span> CANAL TRANSMISSION ACTIF
@@ -378,22 +401,23 @@
 
         <!-- Navigation bar -->
         <nav class="nav-bar">
-            <button class="nav-btn active" onclick="scrollToSec('pitch')">[00] PITCH & SPECS</button>
-            <button class="nav-btn" onclick="scrollToSec('editor')">[01] ÉDITEUR</button>
-            <button class="nav-btn" onclick="scrollToSec('privacy')">[02] DONNÉES & PRIVACY</button>
-            <button class="nav-btn" onclick="scrollToSec('age')">[03] CLASSIFICATION 13+</button>
-            <button class="nav-btn" onclick="scrollToSec('cgu')">[04] CGU & PROPRIÉTÉ</button>
+            <button class="nav-btn active" onclick="scrollToSec(event,'pitch')">[00] PITCH &amp; SPECS</button>
+            <button class="nav-btn" onclick="scrollToSec(event,'editor')">[01] ÉDITEUR</button>
+            <button class="nav-btn" onclick="scrollToSec(event,'privacy')">[02] DONNÉES &amp; PRIVACY</button>
+            <button class="nav-btn" onclick="scrollToSec(event,'support')">[03] ASSISTANCE</button>
+            <button class="nav-btn" onclick="scrollToSec(event,'age')">[04] CLASSIFICATION</button>
+            <button class="nav-btn" onclick="scrollToSec(event,'cgu')">[05] CGU &amp; PROPRIÉTÉ</button>
             <button class="audio-toggle" id="audioBtn" onclick="toggleAudio()">[AUDIO: OFF]</button>
         </nav>
 
         <section id="pitch">
-            <h2>00 // PROTOCOLE SYSTÈME & TRANSMISSION (PITCH)</h2>
+            <h2>00 // PROTOCOLE SYSTÈME &amp; TRANSMISSION (PITCH)</h2>
             <p>
                 Un signal traverse l'espace. Il vient de <span class="highlight">Stellantis</span>, une planète où personne ne devrait se trouver.
                 À l'autre bout, un homme se réveille dans un caisson de survie. Il s'appelle Jerry. Il ne sait ni où il est, ni pourquoi il est là, ni combien de temps il tiendra.
             </p>
             <p class="highlight" style="display:inline-block;">Vous êtes la seule voix qu'il entend.</p>
-            
+
             <div class="grid-2" style="margin-top: 15px;">
                 <div class="card">
                     <div class="card-title">UN JEU QUI SE JOUE AU POIGNET</div>
@@ -414,72 +438,109 @@
                         <li>Morts définitives fermant des branches entières</li>
                         <li>18 archives secrètes à découvrir</li>
                         <li>Gestion d'inventaire en temps réel</li>
-                        <li>Retour haptique immersif sur WatchOS</li>
+                        <li>Retour haptique immersif sur watchOS</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <section id="editor">
-            <h2>01 // MENTIONS ÉDITEUR & HÉBERGEMENT</h2>
+            <h2>01 // MENTIONS ÉDITEUR &amp; HÉBERGEMENT</h2>
             <p>Conformément aux dispositions des articles 6-III et 19 de la Loi n° 2004-575 du 21 juin 2004 pour la Confiance dans l'Économie Numérique (L.C.E.N.), les informations suivantes sont portées à la connaissance des utilisateurs du projet J.E.R.R.Y :</p>
-            
-            <div class="code-box">
-[ÉDITEUR DU SERVICE & DE L'APPLICATION]
-Projet : J.E.R.R.Y App (Apple Watch Experience)
-Équipe de Développement / Studio : [Nom de votre Studio ou Développeur Indépendant]
-Responsable de publication : [Nom du Responsable Legal / Contact]
-Contact Télécom : support@jerry-app-watch.com (ou formulaire dédié)
-Siège Social / Adresse : [Votre Adresse / Ville / Pays]
 
-[DISTRIBUTION & HÉBERGEMENT]
-Plateforme de Distribution : Apple App Store (Apple Inc.)
-Éditeur du Store : Apple Inc., 1 Apple Park Way, Cupertino, CA 95014, États-Unis.
-Hébergement du site d'information : [Nom de l'hébergeur web, ex: GitHub Pages / Vercel / OVH]
-            </div>
+            <div class="code-box">[ÉDITEUR DU SERVICE &amp; DE L'APPLICATION]
+Projet : Projet J.E.R.R.Y (application Apple Watch)
+Éditeur / Développeur : <span class="todo">Jeremy — AstroLab</span>
+Responsable de publication : <span class="todo">Jeremy — AstroLab</span>
+Contact : <a class="mail-link" href="mailto:contact.astrolabs.be@gmail.com"><span class="todo">À COMPLÉTER — une adresse e-mail que vous relevez</span></a>
+Statut : éditeur non professionnel (publication à titre individuel)
+
+[DISTRIBUTION &amp; HÉBERGEMENT]
+Plateforme de distribution : Apple App Store
+Éditeur du Store : Apple Inc., 1 Apple Park Way, Cupertino, CA 95014, États-Unis
+Hébergement du présent site : GitHub Pages — GitHub Inc.,
+88 Colin P Kelly Jr Street, San Francisco, CA 94107, États-Unis</div>
+
+            <p style="font-size: 0.85rem; color: var(--dim-green);">
+                Note : l'éditeur non professionnel qui publie à titre individuel peut, en application de l'article 6-III-2 de la L.C.E.N., ne pas afficher publiquement son adresse postale, à condition d'avoir communiqué ses coordonnées à son hébergeur. Un nom et un moyen de contact restent nécessaires.
+            </p>
         </section>
 
         <section id="privacy">
-            <h2>02 // POLITIQUE DE CONFIDENTIALITÉ & DONNÉES (RGPD)</h2>
+            <h2>02 // POLITIQUE DE CONFIDENTIALITÉ &amp; DONNÉES (RGPD)</h2>
             <div class="alert-badge" style="margin-bottom: 10px;">AUCUNE DONNÉE COLLECTÉE // ZERO TRACKING</div>
             <p>
                 L'application <span class="highlight">Projet J.E.R.R.Y</span> a été pensée et conçue pour préserver l'anonymat et la vie privée absolue de l'opérateur.
             </p>
             <ul>
-                <li><strong>Collecte de données personnelles :</strong> Aucune donnée personnelle (nom, email, géolocalisation, identifiant publicitaire, adresse IP) n'est collectée, stockée ou transmise à des serveurs tiers.</li>
-                <li><strong>Stockage local :</strong> La progression de votre partie (chapitres débloqués, état de santé de Jerry, objets d'inventaire, archives découvertes) est enregistrée <u>exclusivement en local</u> sur la mémoire de votre Apple Watch (et synchronisée via votre compte iCloud personnel le cas échéant).</li>
-                <li><strong>Traqueurs & Analytics :</strong> L'application n'embarque aucun SDK de suivi publicitaire, aucun cookie ni outil d'analyse comportementale de tiers.</li>
-                <li><strong>Notifications :</strong> Les notifications émises par Jerry (vibrations haptiques) sont générées localement par le moteur temporel de l'Apple Watch en fonction du déroulement de l'histoire.</li>
+                <li><strong>Collecte de données personnelles :</strong> aucune donnée personnelle (nom, e-mail, géolocalisation, identifiant publicitaire, adresse IP) n'est collectée, stockée ou transmise à des serveurs tiers. Aucun compte n'est requis pour jouer.</li>
+                <!-- CORRIGÉ : la mention d'une synchronisation iCloud a été retirée. L'application n'en utilise aucune. -->
+                <li><strong>Stockage local :</strong> la progression de votre partie (chapitre en cours, état de Jerry, inventaire, archives découvertes) est enregistrée <u>exclusivement en local</u> sur la mémoire de votre Apple Watch. Elle n'est ni sauvegardée sur un serveur, ni synchronisée vers un service en ligne, et disparaît si vous désinstallez l'application.</li>
+                <li><strong>Aucune connexion réseau :</strong> l'application fonctionne intégralement hors ligne et n'effectue aucune requête vers Internet.</li>
+                <li><strong>Traqueurs &amp; analytics :</strong> l'application n'embarque aucun SDK de suivi publicitaire, aucun cookie, aucun outil de mesure d'audience et aucune publicité.</li>
+                <li><strong>Notifications :</strong> les notifications et vibrations émises par Jerry sont générées localement par l'Apple Watch en fonction du déroulement de l'histoire. Elles ne transitent par aucun serveur.</li>
+                <li><strong>Vos droits :</strong> aucune donnée n'étant collectée, il n'existe aucun traitement susceptible de faire l'objet d'une demande d'accès, de rectification ou d'effacement. Pour effacer votre progression, utilisez « Réinitialiser le signal » dans les réglages de l'application, ou désinstallez-la.</li>
             </ul>
         </section>
 
+        <section id="support">
+            <h2>03 // ASSISTANCE OPÉRATEUR</h2>
+            <p>Un problème, une question, un bug à signaler ? Le canal est ouvert.</p>
+
+            <div class="code-box">CONTACT ASSISTANCE
+<a class="mail-link" href="mailto:contact.astrolabs.be@gmail.com"><span class="todo">À COMPLÉTER — une adresse e-mail que vous relevez</span></a>
+Délai de réponse habituel : quelques jours ouvrés</div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">RECOMMENCER UNE PARTIE</div>
+                    <p style="font-size: 0.85rem;">Dans l'application : faites défiler jusqu'à l'inventaire, ouvrez les réglages, puis choisissez <strong>« Réinitialiser le signal »</strong>. Cette action efface définitivement la progression et les archives découvertes.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">JERRY NE RÉPOND PLUS</div>
+                    <p style="font-size: 0.85rem;">Certaines actions demandent du temps réel — un trajet, une nuit de sommeil. Refermez l'application : une vibration vous préviendra. Si aucune notification n'arrive, vérifiez que les notifications sont autorisées pour l'application dans les réglages de la montre.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">J'AI PERDU MA PROGRESSION</div>
+                    <p style="font-size: 0.85rem;">La sauvegarde est stockée uniquement sur la montre. Une désinstallation, une réinitialisation ou un changement d'Apple Watch l'efface sans possibilité de récupération.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">SIGNALER UN BLOCAGE</div>
+                    <p style="font-size: 0.85rem;">Indiquez le chapitre en cours et le dernier message reçu de Jerry. Ces deux informations suffisent à localiser précisément le point du récit concerné.</p>
+                </div>
+            </div>
+        </section>
+
         <section id="age">
-            <h2>03 // CLASSIFICATION ÉDITORIALE & AGE (13+)</h2>
+            <h2>04 // CLASSIFICATION ÉDITORIALE &amp; ÂGE</h2>
             <p>
-                L'application est classée <span class="alert-badge">13+ (Adolescents)</span> selon les critères de l'Apple App Store.
+                <!-- À AJUSTER si le questionnaire App Store Connect attribue une autre tranche.
+                     Pensez alors à modifier aussi la réponse de la commande 'age' du terminal ci-dessous. -->
+                L'application est classée <span class="alert-badge" id="ageBadge">13+</span> selon les critères de l'Apple App Store.
             </p>
             <div class="card" style="margin-top: 10px;">
                 <div class="card-title">AVERTISSEMENT RELATIF AU CONTENU</div>
                 <p style="font-size: 0.85rem; margin-bottom: 8px;">
-                    Projet J.E.R.R.Y contient des thèmes d'angoisse, d'isolement spatial, de la violence narrative modérée, ainsi que des représentations d'infections et de contraintes biologiques (mesure d'oxygène, contamination sanguine).
+                    Projet J.E.R.R.Y aborde des thèmes d'angoisse et d'isolement, ainsi que des situations de survie impliquant la privation d'oxygène et une contamination biologique.
                 </p>
                 <ul style="font-size: 0.85rem;">
                     <li>Thèmes sombres et situations de survie extrême</li>
-                    <li>Récit de mort définitive et échec de mission</li>
-                    <li>Aucune violence graphique visuelle (narration textuelle uniquement)</li>
+                    <li>Récit de mort définitive et d'échec de mission</li>
+                    <li>Aucune violence graphique : narration textuelle uniquement</li>
+                    <li>Aucun contenu sexuel, aucune substance, aucun jeu d'argent</li>
                 </ul>
             </div>
         </section>
 
         <section id="cgu">
-            <h2>04 // PROPRIÉTÉ INTELLECTUELLE & CGU</h2>
+            <h2>05 // PROPRIÉTÉ INTELLECTUELLE &amp; CGU</h2>
             <p>
-                L'ensemble des éléments constituant le projet J.E.R.R.Y (textes des 14 chapitres, narration, plus de 400 scénarios, archives, logos, identité visuelle terminal, effets sonores et algorithmes d'inventaire) est la propriété exclusive de l'éditeur ou fait l'objet d'une licence d'utilisation.
+                L'ensemble des éléments constituant le projet J.E.R.R.Y (textes des 14 chapitres, narration, scénarios, archives, logo, identité visuelle et code de l'application) est la propriété exclusive de l'éditeur ou fait l'objet d'une licence d'utilisation.
             </p>
             <ul>
-                <li><strong>Reproduction :</strong> Toute reproduction, représentation, modification ou adaptation totale ou partielle des textes, archives et univers du jeu sans autorisation écrite préalable est strictement interdite.</li>
-                <li><strong>Conditions d'utilisation :</strong> L'utilisation de l'application se fait à titre individuel et privé. L'opérateur s'engage à ne pas tenter de décompiler ou rétro-concevoir le code binaire de l'application WatchOS.</li>
-                <li><strong>Limitation de responsabilité :</strong> L'éditeur ne saurait être tenu responsable des dysfonctionnements temporaires liés aux mises à jour WatchOS ou au matériel de l'utilisateur. En outre, la survie du personnage Jerry dépend uniquement des choix de l'opérateur.</li>
+                <li><strong>Reproduction :</strong> toute reproduction, représentation, modification ou adaptation totale ou partielle des textes, archives et univers du jeu sans autorisation écrite préalable est strictement interdite.</li>
+                <li><strong>Conditions d'utilisation :</strong> l'utilisation de l'application se fait à titre individuel et privé. L'opérateur s'engage à ne pas tenter de décompiler ou rétro-concevoir le code binaire de l'application watchOS.</li>
+                <li><strong>Limitation de responsabilité :</strong> l'éditeur ne saurait être tenu responsable des dysfonctionnements temporaires liés aux mises à jour de watchOS ou au matériel de l'utilisateur. En outre, la survie du personnage Jerry dépend uniquement des choix de l'opérateur.</li>
             </ul>
         </section>
 
@@ -501,7 +562,7 @@ Hébergement du site d'information : [Nom de l'hébergeur web, ex: GitHub Pages 
     </div>
 
     <script>
-        // Audio Synthesize using Web Audio API (No external sound files required)
+        // Audio synthétisé via Web Audio API (aucun fichier son externe)
         let audioEnabled = false;
         let audioCtx = null;
 
@@ -546,20 +607,21 @@ Hébergement du site d'information : [Nom de l'hébergeur web, ex: GitHub Pages 
             }
         }
 
-        function scrollToSec(id) {
+        // CORRIGÉ : l'événement est passé en paramètre (window.event est obsolète
+        // et ne fonctionne pas sur Firefox ni Safari).
+        function scrollToSec(evt, id) {
             playBeep(900, 'sine', 0.04);
             const el = document.getElementById(id);
             if (el) {
                 el.scrollIntoView({ behavior: 'smooth' });
             }
-            // Update active nav button
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            if (event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
             }
         }
 
-        // Terminal Interactive CLI Command Processor
+        // Terminal interactif
         function handleCli(e) {
             if (e.key === 'Enter') {
                 const input = document.getElementById('cliInput');
@@ -576,19 +638,24 @@ Hébergement du site d'information : [Nom de l'hébergeur web, ex: GitHub Pages 
 
                 switch (cmd) {
                     case 'help':
-                        respLine.innerText = "Commandes disponibles: help, status, pitch, privacy, age, clear, jerry";
+                        respLine.innerText = "Commandes disponibles: help, status, pitch, privacy, support, age, clear, jerry";
                         break;
                     case 'status':
-                        respLine.innerText = "[SYS] Diagnostic: WatchOS Sync OK | Oxygène: 42% | Contamination: Stable | Données: 0 collectées.";
+                        // CORRIGÉ : plus de mention de synchronisation.
+                        respLine.innerText = "[SYS] Diagnostic: stockage local OK | Oxygène: 42% | Contamination: stable | Données collectées: 0.";
                         break;
                     case 'pitch':
                         respLine.innerText = "Un signal traverse l'espace... Jerry se réveille sur Stellantis. Vous êtes la seule voix qu'il entend au poignet.";
                         break;
                     case 'privacy':
-                        respLine.innerText = "[PRIVACY] Aucune donnée collectée. Progression enregistrée uniquement sur Apple Watch.";
+                        respLine.innerText = "[PRIVACY] Aucune donnée collectée. Progression enregistrée uniquement sur l'Apple Watch. Aucune connexion réseau.";
+                        break;
+                    case 'support':
+                        respLine.innerText = "[SUPPORT] Voir la section 03 // ASSISTANCE OPÉRATEUR pour le contact et les problèmes fréquents.";
                         break;
                     case 'age':
-                        respLine.innerText = "[AGE RATING] 13+ (App Store). Violence narrative, situations de survie et contamination.";
+                        // À ajuster si la classification change.
+                        respLine.innerText = "[AGE RATING] 13+ (App Store). Thèmes d'angoisse, survie et contamination. Aucune violence graphique.";
                         break;
                     case 'jerry':
                         respLine.innerText = "... 'Allô ? C'est vous ? Attendez, je crois que j'ai entendu un bruit dans le couloir B...'";
@@ -609,7 +676,7 @@ Hébergement du site d'information : [Nom de l'hébergeur web, ex: GitHub Pages 
             }
         }
 
-        // Add acoustic click effect to interactive links & buttons
+        // Effet sonore au survol des éléments interactifs
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('button, a').forEach(elem => {
                 elem.addEventListener('mouseenter', () => playBeep(600, 'sine', 0.02));
