@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.E.R.R.Y // Mentions Légales & Protocole Système</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600;700&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #030a05;
+            --main-green: #00ff66;
+            --dim-green: #00b347;
+            --dark-green: #002b11;
+            --alert-amber: #ffb700;
+            --alert-red: #ff3333;
+            --glow-color: rgba(0, 255, 102, 0.4);
+            --scanline-color: rgba(0, 20, 10, 0.5);
+            --font-main: 'Fira Code', monospace;
+            --font-display: 'VT323', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--main-green);
+            font-family: var(--font-main);
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px 15px;
+            position: relative;
+            overflow-x: hidden;
+            text-shadow: 0 0 4px var(--glow-color);
+        }
+
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 999;
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.985; }
+            50% { opacity: 1; }
+            100% { opacity: 0.988; }
+        }
+
+        .crt-overlay {
+            animation: flicker 0.15s infinite;
+            max-width: 1050px;
+            margin: 0 auto;
+            border: 2px solid var(--main-green);
+            box-shadow: 0 0 20px var(--glow-color), inset 0 0 20px rgba(0, 255, 102, 0.08);
+            border-radius: 8px;
+            padding: 25px;
+            background: rgba(3, 15, 7, 0.92);
+            position: relative;
+        }
+
+        .terminal-header {
+            border-bottom: 2px dashed var(--main-green);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .sys-title {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .sys-subtitle {
+            font-size: 0.85rem;
+            color: var(--dim-green);
+            margin-top: 4px;
+        }
+
+        .sys-meta {
+            font-size: 0.85rem;
+            color: var(--dim-green);
+            text-align: right;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--dark-green);
+            color: var(--main-green);
+            border: 1px solid var(--main-green);
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+
+        .status-pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--main-green);
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 8px var(--main-green);
+            animation: blink 1.2s infinite alternate;
+        }
+
+        @keyframes blink {
+            from { opacity: 0.2; }
+            to { opacity: 1; }
+        }
+
+        .nav-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            background: rgba(0, 43, 17, 0.4);
+            padding: 10px;
+            border: 1px solid var(--dark-green);
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: var(--main-green);
+            border: 1px solid var(--dim-green);
+            padding: 6px 14px;
+            font-family: var(--font-main);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--main-green);
+            color: var(--bg-color);
+            box-shadow: 0 0 10px var(--main-green);
+            font-weight: bold;
+        }
+
+        .audio-toggle {
+            margin-left: auto;
+            background: rgba(0, 255, 102, 0.1);
+            border: 1px solid var(--main-green);
+            color: var(--main-green);
+            padding: 4px 10px;
+            font-family: var(--font-main);
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .audio-toggle:hover {
+            background: var(--main-green);
+            color: var(--bg-color);
+        }
+
+        section {
+            margin-bottom: 35px;
+            border-left: 3px solid var(--dim-green);
+            padding-left: 18px;
+            transition: border-color 0.3s ease;
+        }
+
+        section:hover {
+            border-color: var(--main-green);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            letter-spacing: 1px;
+            color: var(--main-green);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: ">";
+            color: var(--dim-green);
+        }
+
+        p, ul {
+            margin-bottom: 12px;
+            color: #c0ffd9;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 8px;
+        }
+
+        ul li::before {
+            content: ">>";
+            position: absolute;
+            left: 0;
+            color: var(--dim-green);
+            font-size: 0.75rem;
+        }
+
+        .highlight {
+            color: #ffffff;
+            font-weight: 600;
+            background: rgba(0, 255, 102, 0.18);
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .alert-badge {
+            display: inline-block;
+            background: rgba(255, 183, 0, 0.15);
+            color: var(--alert-amber);
+            border: 1px solid var(--alert-amber);
+            padding: 2px 8px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            border-radius: 3px;
+            text-shadow: 0 0 5px rgba(255, 183, 0, 0.5);
+        }
+
+        .code-box {
+            background: var(--dark-green);
+            border: 1px dashed var(--dim-green);
+            padding: 15px;
+            font-size: 0.85rem;
+            margin: 15px 0;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .card {
+            background: rgba(0, 43, 17, 0.35);
+            border: 1px solid var(--dim-green);
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .card-title {
+            color: var(--main-green);
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--dark-green);
+            padding-bottom: 4px;
+        }
+
+        .terminal-cli {
+            background: #011105;
+            border: 1px solid var(--main-green);
+            padding: 12px 15px;
+            margin-top: 30px;
+            border-radius: 4px;
+        }
+
+        .cli-output {
+            max-height: 120px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: #79ffa7;
+        }
+
+        .cli-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cli-input {
+            background: transparent;
+            border: none;
+            color: var(--main-green);
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+            text-shadow: 0 0 4px var(--glow-color);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: var(--main-green);
+            animation: cursor-blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes cursor-blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .terminal-footer {
+            border-top: 1px solid var(--dim-green);
+            padding-top: 15px;
+            margin-top: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--dim-green);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .terminal-header {
+                flex-direction: column;
+            }
+            .sys-meta {
+                text-align: left;
+            }
+            .nav-bar {
+                flex-direction: column;
+            }
+            .audio-toggle {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="crt-overlay">
+        
+        <!-- Terminal Header -->
+        <header class="terminal-header">
+            <div>
+                <h1 class="sys-title">PROJET J.E.R.R.Y // LEGAL PROTOCOL</h1>
+                <div class="sys-subtitle">MENTIONS LÉGALES, CGU & POLITIQUE DE CONFIDENTIALITÉ WATCHOS</div>
+            </div>
+            <div class="sys-meta">
+                <div>SYS_VER: 1.0.4-WATCH</div>
+                <div>SIGNAL: STELLANTIS // FREQ: 1420.405 MHz</div>
+                <div class="status-badge">
+                    <span class="status-pulse"></span> CANAL TRANSMISSION ACTIF
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation bar -->
+        <nav class="nav-bar">
+            <button class="nav-btn active" onclick="scrollToSec('pitch')">[00] PITCH & SPECS</button>
+            <button class="nav-btn" onclick="scrollToSec('editor')">[01] ÉDITEUR</button>
+            <button class="nav-btn" onclick="scrollToSec('privacy')">[02] DONNÉES & PRIVACY</button>
+            <button class="nav-btn" onclick="scrollToSec('age')">[03] CLASSIFICATION 13+</button>
+            <button class="nav-btn" onclick="scrollToSec('cgu')">[04] CGU & PROPRIÉTÉ</button>
+            <button class="audio-toggle" id="audioBtn" onclick="toggleAudio()">[AUDIO: OFF]</button>
+        </nav>
+
+        <section id="pitch">
+            <h2>00 // PROTOCOLE SYSTÈME & TRANSMISSION (PITCH)</h2>
+            <p>
+                Un signal traverse l'espace. Il vient de <span class="highlight">Stellantis</span>, une planète où personne ne devrait se trouver.
+                À l'autre bout, un homme se réveille dans un caisson de survie. Il s'appelle Jerry. Il ne sait ni où il est, ni pourquoi il est là, ni combien de temps il tiendra.
+            </p>
+            <p class="highlight" style="display:inline-block;">Vous êtes la seule voix qu'il entend.</p>
+            
+            <div class="grid-2" style="margin-top: 15px;">
+                <div class="card">
+                    <div class="card-title">UN JEU QUI SE JOUE AU POIGNET</div>
+                    <p style="font-size: 0.85rem;">Projet J.E.R.R.Y est un récit interactif conçu pour l'<strong>Apple Watch</strong>. Pas de manette, pas de menus complexes : des messages, des choix, et les conséquences de vos choix. Vous ne contrôlez pas Jerry. Vous le conseillez. Il fait ce que vous lui dites — et il en meurt parfois.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">LE TEMPS PASSE VRAIMENT</div>
+                    <p style="font-size: 0.85rem;">Quand Jerry traverse un hangar, il met le temps qu'il faut. Quand il dort, il dort huit heures. Vous refermez l'application, vous reprenez votre journée, et une vibration vous prévient qu'il a quelque chose à dire. Le jeu vous attend. Jerry, lui, n'attend pas toujours.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">SURVIVRE, PUIS COMPRENDRE</div>
+                    <p style="font-size: 0.85rem;">L'oxygène s'épuise. Une contamination progresse dans son sang. Les médicaments la ralentissent sans jamais l'arrêter, et il n'y en a pas assez. Mais la vraie question n'est pas de savoir si Jerry survivra. C'est de savoir ce qu'il est.</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">SPÉCIFICATIONS TECHNIQUES</div>
+                    <ul style="font-size: 0.85rem;">
+                        <li>14 chapitres, plus de 400 situations uniques</li>
+                        <li>Morts définitives fermant des branches entières</li>
+                        <li>18 archives secrètes à découvrir</li>
+                        <li>Gestion d'inventaire en temps réel</li>
+                        <li>Retour haptique immersif sur WatchOS</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="editor">
+            <h2>01 // MENTIONS ÉDITEUR & HÉBERGEMENT</h2>
+            <p>Conformément aux dispositions des articles 6-III et 19 de la Loi n° 2004-575 du 21 juin 2004 pour la Confiance dans l'Économie Numérique (L.C.E.N.), les informations suivantes sont portées à la connaissance des utilisateurs du projet J.E.R.R.Y :</p>
+            
+            <div class="code-box">
+[ÉDITEUR DU SERVICE & DE L'APPLICATION]
+Projet : J.E.R.R.Y App (Apple Watch Experience)
+Équipe de Développement / Studio : [Nom de votre Studio ou Développeur Indépendant]
+Responsable de publication : [Nom du Responsable Legal / Contact]
+Contact Télécom : support@jerry-app-watch.com (ou formulaire dédié)
+Siège Social / Adresse : [Votre Adresse / Ville / Pays]
+
+[DISTRIBUTION & HÉBERGEMENT]
+Plateforme de Distribution : Apple App Store (Apple Inc.)
+Éditeur du Store : Apple Inc., 1 Apple Park Way, Cupertino, CA 95014, États-Unis.
+Hébergement du site d'information : [Nom de l'hébergeur web, ex: GitHub Pages / Vercel / OVH]
+            </div>
+        </section>
+
+        <section id="privacy">
+            <h2>02 // POLITIQUE DE CONFIDENTIALITÉ & DONNÉES (RGPD)</h2>
+            <div class="alert-badge" style="margin-bottom: 10px;">AUCUNE DONNÉE COLLECTÉE // ZERO TRACKING</div>
+            <p>
+                L'application <span class="highlight">Projet J.E.R.R.Y</span> a été pensée et conçue pour préserver l'anonymat et la vie privée absolue de l'opérateur.
+            </p>
+            <ul>
+                <li><strong>Collecte de données personnelles :</strong> Aucune donnée personnelle (nom, email, géolocalisation, identifiant publicitaire, adresse IP) n'est collectée, stockée ou transmise à des serveurs tiers.</li>
+                <li><strong>Stockage local :</strong> La progression de votre partie (chapitres débloqués, état de santé de Jerry, objets d'inventaire, archives découvertes) est enregistrée <u>exclusivement en local</u> sur la mémoire de votre Apple Watch (et synchronisée via votre compte iCloud personnel le cas échéant).</li>
+                <li><strong>Traqueurs & Analytics :</strong> L'application n'embarque aucun SDK de suivi publicitaire, aucun cookie ni outil d'analyse comportementale de tiers.</li>
+                <li><strong>Notifications :</strong> Les notifications émises par Jerry (vibrations haptiques) sont générées localement par le moteur temporel de l'Apple Watch en fonction du déroulement de l'histoire.</li>
+            </ul>
+        </section>
+
+        <section id="age">
+            <h2>03 // CLASSIFICATION ÉDITORIALE & AGE (13+)</h2>
+            <p>
+                L'application est classée <span class="alert-badge">13+ (Adolescents)</span> selon les critères de l'Apple App Store.
+            </p>
+            <div class="card" style="margin-top: 10px;">
+                <div class="card-title">AVERTISSEMENT RELATIF AU CONTENU</div>
+                <p style="font-size: 0.85rem; margin-bottom: 8px;">
+                    Projet J.E.R.R.Y contient des thèmes d'angoisse, d'isolement spatial, de la violence narrative modérée, ainsi que des représentations d'infections et de contraintes biologiques (mesure d'oxygène, contamination sanguine).
+                </p>
+                <ul style="font-size: 0.85rem;">
+                    <li>Thèmes sombres et situations de survie extrême</li>
+                    <li>Récit de mort définitive et échec de mission</li>
+                    <li>Aucune violence graphique visuelle (narration textuelle uniquement)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="cgu">
+            <h2>04 // PROPRIÉTÉ INTELLECTUELLE & CGU</h2>
+            <p>
+                L'ensemble des éléments constituant le projet J.E.R.R.Y (textes des 14 chapitres, narration, plus de 400 scénarios, archives, logos, identité visuelle terminal, effets sonores et algorithmes d'inventaire) est la propriété exclusive de l'éditeur ou fait l'objet d'une licence d'utilisation.
+            </p>
+            <ul>
+                <li><strong>Reproduction :</strong> Toute reproduction, représentation, modification ou adaptation totale ou partielle des textes, archives et univers du jeu sans autorisation écrite préalable est strictement interdite.</li>
+                <li><strong>Conditions d'utilisation :</strong> L'utilisation de l'application se fait à titre individuel et privé. L'opérateur s'engage à ne pas tenter de décompiler ou rétro-concevoir le code binaire de l'application WatchOS.</li>
+                <li><strong>Limitation de responsabilité :</strong> L'éditeur ne saurait être tenu responsable des dysfonctionnements temporaires liés aux mises à jour WatchOS ou au matériel de l'utilisateur. En outre, la survie du personnage Jerry dépend uniquement des choix de l'opérateur.</li>
+            </ul>
+        </section>
+
+        <div class="terminal-cli">
+            <div class="cli-output" id="cliOutput">
+                <div>[SYSTEM] Terminal de commande actif. Tapez 'help' ou 'pitch' pour interroger la base.</div>
+            </div>
+            <div class="cli-line">
+                <span>OPÉRATION@STELLANTIS:~$</span>
+                <input type="text" id="cliInput" class="cli-input" placeholder="Tapez une commande (ex: help, status, privacy)..." onkeydown="handleCli(event)" autocomplete="off">
+            </div>
+        </div>
+
+        <footer class="terminal-footer">
+            <div>PROJET J.E.R.R.Y &copy; 2026 // TOUS DROITS RÉSERVÉS</div>
+            <div>STATUS: OPÉRATIONNEL <span class="cursor"></span></div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Audio Synthesize using Web Audio API (No external sound files required)
+        let audioEnabled = false;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playBeep(freq = 800, type = 'sine', duration = 0.05) {
+            if (!audioEnabled) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {
+                console.log('Audio playback error', e);
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const btn = document.getElementById('audioBtn');
+            if (audioEnabled) {
+                initAudio();
+                btn.innerText = '[AUDIO: ON]';
+                btn.style.background = 'var(--main-green)';
+                btn.style.color = 'var(--bg-color)';
+                playBeep(1200, 'square', 0.1);
+            } else {
+                btn.innerText = '[AUDIO: OFF]';
+                btn.style.background = 'rgba(0, 255, 102, 0.1)';
+                btn.style.color = 'var(--main-green)';
+            }
+        }
+
+        function scrollToSec(id) {
+            playBeep(900, 'sine', 0.04);
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+            // Update active nav button
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+        }
+
+        // Terminal Interactive CLI Command Processor
+        function handleCli(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('cliInput');
+                const output = document.getElementById('cliOutput');
+                const cmd = input.value.trim().toLowerCase();
+                playBeep(1000, 'triangle', 0.06);
+
+                const userLine = document.createElement('div');
+                userLine.style.color = '#ffffff';
+                userLine.innerText = `OPÉRATION@STELLANTIS:~$ ${input.value}`;
+                output.appendChild(userLine);
+
+                const respLine = document.createElement('div');
+
+                switch (cmd) {
+                    case 'help':
+                        respLine.innerText = "Commandes disponibles: help, status, pitch, privacy, age, clear, jerry";
+                        break;
+                    case 'status':
+                        respLine.innerText = "[SYS] Diagnostic: WatchOS Sync OK | Oxygène: 42% | Contamination: Stable | Données: 0 collectées.";
+                        break;
+                    case 'pitch':
+                        respLine.innerText = "Un signal traverse l'espace... Jerry se réveille sur Stellantis. Vous êtes la seule voix qu'il entend au poignet.";
+                        break;
+                    case 'privacy':
+                        respLine.innerText = "[PRIVACY] Aucune donnée collectée. Progression enregistrée uniquement sur Apple Watch.";
+                        break;
+                    case 'age':
+                        respLine.innerText = "[AGE RATING] 13+ (App Store). Violence narrative, situations de survie et contamination.";
+                        break;
+                    case 'jerry':
+                        respLine.innerText = "... 'Allô ? C'est vous ? Attendez, je crois que j'ai entendu un bruit dans le couloir B...'";
+                        respLine.style.color = 'var(--alert-amber)';
+                        break;
+                    case 'clear':
+                        output.innerHTML = '';
+                        input.value = '';
+                        return;
+                    default:
+                        respLine.innerText = `Commande non reconnue: '${cmd}'. Tapez 'help' pour la liste.`;
+                        respLine.style.color = 'var(--alert-red)';
+                }
+
+                output.appendChild(respLine);
+                output.scrollTop = output.scrollHeight;
+                input.value = '';
+            }
+        }
+
+        // Add acoustic click effect to interactive links & buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('button, a').forEach(elem => {
+                elem.addEventListener('mouseenter', () => playBeep(600, 'sine', 0.02));
+            });
+        });
+    </script>
+</body>
+</html>
